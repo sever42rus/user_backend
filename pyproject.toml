@@ -1,0 +1,84 @@
+[tool.poetry]
+name = "backend-users"
+version = "0.1.1"
+description = ""
+authors = ["Pavel Kungurov <kungurov.ps@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.0"
+pydantic = "^2.9.1"
+pydantic-settings = "^2.5.2"
+piccolo = {extras = ["postgres"], version = "^1.17.0"}
+ipython = "^8.27.0"
+uvicorn = "^0.30.6"
+gunicorn = "^23.0.0"
+httpx = "^0.27.2"
+pyjwt = {extras = ["crypto"], version = "^2.9.0"}
+python-dotenv = "^1.0.1"
+backend-common-lib = "0.1.10"
+email-validator = "^2.2.0"
+phonenumbers = "^8.13.45"
+toml = "^0.10.2"
+backend-auth-lib = "0.1.2"
+
+[tool.poetry.group.linters.dependencies]
+ruff = "^0.6.5"
+black = "^24.8.0"
+bandit = "^1.7.9"
+pre-commit = "^3.8.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
+pytest-cov = "^5.0.0"
+pytest-mock = "^3.14.0"
+polyfactory = "^2.16.2"
+pytest-env = "^1.1.4"
+pytest-trio = "^0.8.0"
+
+[tool.pytest.ini_options]
+addopts = "--cov=src"
+pythonpath = "./src"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::pytest.PytestConfigWarning",
+]
+asyncio_mode = "auto"
+env = [
+    "POSTGRES_DATABASE={POSTGRES_DATABASE_TEST}"
+]
+
+[[tool.poetry.source]]
+name = "food-tracker-pypi"
+url = "урл моего гитлаба =)))"
+priority = "primary"
+
+[tool.coverage.run]
+omit = ["*/tests/*", "main.py", "conftest.py", "piccolo_conf.py", "app.py", "piccolo_app.py", "*/migrations/*"]
+
+[tool.black]
+addopts = "--fast"
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+line-length = 119
+target_versions = ["py311"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
